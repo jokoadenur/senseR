@@ -30,15 +30,14 @@ underlying construct that cannot be directly observed or measured.
 
 The function assesses each proxy based on multiple statistical dimensions:
 monotonicity, information content, stability, distributional alignment,
-and potential bias risk. The output is a concise, interpretable summary
-printed directly to the console.
+bias risk, and dynamic range (sensitivity). The output is a concise,
+interpretable summary printed directly to the console.
 
 This tool is intended for analytical diagnostics and policy-oriented
 indicator assessment. It does not claim causal inference.
 }
 \details{
-The diagnostic score for each proxy is computed as the average of five
-normalized components:
+The diagnostic score for each proxy is computed using six normalized components:
 
 \enumerate{
 \item \strong{Monotonicity}: Spearman rank correlation between proxy and target.
@@ -48,9 +47,14 @@ normalized components:
 using the Kolmogorov--Smirnov statistic.
 \item \strong{Bias risk}: Penalization for strong nonlinearity indicating
 potential proxy distortion.
+\item \strong{Dynamic range / Sensitivity}: Penalization if the proxy has
+very small changes relative to the target (detects ceiling effect or nearly flat proxies).
 }
 
-The overall score ranges from 0 to 1 and is classified into three categories:
+The final score is calculated as the \strong{median} of all six components,
+providing a robust measure less sensitive to extreme values.
+
+The score ranges from 0 to 1 and is classified into three categories:
 
 \itemize{
 \item \strong{Suitable proxy}: score >= 0.70
@@ -77,15 +81,6 @@ senser(
   lang = "english"
 )
 
-}
-\references{
-Elbers, C., Lanjouw, J. O., & Lanjouw, P. (2003).
-Micro-level estimation of poverty and inequality.
-\emph{Econometrica}.
-
-Henderson, J. V., Storeygard, A., & Weil, D. N. (2012).
-Measuring economic growth from outer space.
-\emph{American Economic Review}.
 }
 \seealso{
 \code{\link{lm}}, \code{\link{cor}}, \code{\link{ks.test}}
