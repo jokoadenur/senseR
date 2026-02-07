@@ -1,11 +1,17 @@
 Package: senseR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Proxy Indicator Diagnostic Tool for Analytical and Policy Use
+Version: 0.1.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Joko Ade", "Nursiyono", , "jokoadenursiyono@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0008-1179-6776"))
+Description: Provides statistical diagnostics to evaluate whether proxy indicators reliably represent an unobservable target construct. The main function 'senser()' assesses proxies across multiple dimensions including monotonicity, information content, stability, distributional alignment, and potential bias risk. It prints a concise, interpretable summary suitable for analytical and policy-oriented assessment, without claiming causal inference.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr

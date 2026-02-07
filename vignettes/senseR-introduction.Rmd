@@ -1,0 +1,80 @@
+---
+title: "senseR-introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{senseR-introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(senseR)
+```
+
+## Introduction
+
+`senseR` is a statistical diagnostic tool designed to evaluate whether proxy indicators can reliably represent an underlying construct that cannot be directly observed or measured.
+It is intended for analytical diagnostics and policy-oriented assessment. Note that it does not perform causal inference.
+
+## The `senser()` Function
+
+The main function is senser(). It computes a diagnostic score for each proxy based on five components:
+Monotonicity – Spearman rank correlation between proxy and target.
+Information content – Proportion of variance explained (R-squared).
+Stability – Sensitivity of regression coefficients across subsamples.
+Distributional alignment – Similarity of standardized distributions via Kolmogorov–Smirnov test.
+Bias risk – Penalization for strong nonlinearity indicating potential proxy distortion.
+
+The overall score is the average of these five components, ranging from 0 to 1:
+Suitable proxy: score >= 0.70
+Conditionally suitable: 0.40 <= score < 0.70
+Not suitable proxy: score < 0.40
+Interpretation is automatically generated in English or Indonesian.
+
+```{r}
+# example
+set.seed(123)
+
+# Simulated dataset
+df <- data.frame(
+  gdp = rnorm(100, 10, 2),
+  ntl = rnorm(100, 50, 10),
+  road_density = rnorm(100, 3, 0.5),
+  mobile_signal = rnorm(100, 70, 15)
+)
+
+# Run senser in English
+senser(
+  data = df,
+  proxy = c("ntl", "road_density", "mobile_signal"),
+  target = "gdp",
+  lang = "english"
+)
+```
+
+```{r}
+# Indonesian language support
+senser(
+  data = df,
+  proxy = c("ntl", "road_density"),
+  target = "gdp",
+  lang = "indonesia"
+)
+
+```
+
+## Notes
+Output is printed to the console; the function does not return a value invisibly. Designed for applied diagnostics and policy assessment. Always compare multiple proxies to select the most reliable indicators.
+
+## References
+
+Elbers, C., Lanjouw, J. O., & Lanjouw, P. (2003). Micro-level estimation of poverty and inequality. Econometrica.
+Henderson, J. V., Storeygard, A., & Weil, D. N. (2012). Measuring economic growth from outer space. American Economic Review.
+
