@@ -4,7 +4,15 @@
 \alias{senser}
 \title{senser: Proxy Indicator Diagnostic Tool}
 \usage{
-senser(data, proxy, target, lang = c("english", "indonesia"))
+senser(
+  data,
+  proxy,
+  target,
+  lang = c("english", "indonesia"),
+  stagnation_cut = 0.01,
+  cv_cut = 0.02,
+  ceiling_cut = 0.95
+)
 }
 \arguments{
 \item{data}{A \code{data.frame} containing the target construct and proxy variables.}
@@ -17,6 +25,19 @@ name contained in \code{data}.}
 
 \item{lang}{A character string specifying the language of interpretation.
 Options are \code{"english"} (default) or \code{"indonesia"}.}
+
+\item{stagnation_cut}{Numeric scalar. Threshold used to detect stagnation
+(very small average absolute change). If the average absolute change of
+the proxy variable is below this value, a structural penalty is applied.
+Default is 0.01.}
+
+\item{cv_cut}{Numeric scalar. Threshold for the coefficient of variation
+(CV). If the coefficient of variation of the proxy variable is below
+this value, a variability penalty is applied. Default is 0.02.}
+
+\item{ceiling_cut}{Numeric scalar. Threshold used to detect ceiling
+effects. If the ceiling ratio exceeds this value, a ceiling penalty is
+applied. Default is 0.95.}
 }
 \value{
 The function prints a structured diagnostic summary to the console.
@@ -37,6 +58,19 @@ This tool is intended for analytical diagnostics and policy-oriented
 indicator assessment. It does not claim causal inference.
 }
 \details{
+The stagnation threshold is used to penalize proxy variables that exhibit
+minimal temporal or cross-sectional variation. Extremely small changes
+may indicate lack of sensitivity or measurement rigidity.
+
+The coefficient of variation (CV) is defined as the ratio of the standard
+deviation to the mean. Very low CV values indicate insufficient dispersion,
+which may reduce the informational usefulness of the proxy variable.
+
+A ceiling effect occurs when observations cluster near the upper bound
+of the distribution, limiting discriminatory power. If the ceiling ratio
+exceeds this threshold, the proxy's score is penalized to reflect reduced
+measurement sensitivity.
+
 The diagnostic score for each proxy is computed using six normalized components:
 
 \enumerate{
