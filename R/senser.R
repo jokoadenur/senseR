@@ -110,6 +110,7 @@
 #'   lang = "english"
 #' )
 #'
+#' @importFrom stats complete.cases cor coef lm sd median
 #' @export
 senser <- function(data, proxy, target,
                    lang = c("english", "indonesia"),
